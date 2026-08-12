@@ -1,0 +1,39 @@
+class Solution:
+    def findPages(self, arr, k):
+        n = len(arr)
+
+        def isValid(arr, n, k, maxallowedpages):
+            stu = 1
+            pages = 0
+
+            for i in range(n):
+                if arr[i] > maxallowedpages:
+                    return False
+
+                if pages + arr[i] <= maxallowedpages:
+                    pages += arr[i]
+                else:
+                    stu += 1
+                    pages = arr[i]
+
+            return stu <= k
+
+        if k > n:
+            return -1
+
+        total_pages = sum(arr)
+
+        ans = -1
+        st = max(arr)
+        end = total_pages
+
+        while st <= end:
+            mid = st + (end - st) // 2
+
+            if isValid(arr, n, k, mid):
+                ans = mid
+                end = mid - 1
+            else:
+                st = mid + 1
+
+        return ans
