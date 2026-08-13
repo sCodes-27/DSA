@@ -1,0 +1,28 @@
+def painting (arr,m):
+    n = len(arr)
+    def isPossible(arr,n,m,maxallowedtime):
+        painter = 1
+        time = 0
+        for i in range(n):
+            if arr[i]>maxallowedtime:
+                return False
+            elif time+arr[i]<=maxallowedtime:
+                time+=arr[i]
+            else:
+                painter+=1
+                time = arr[i]
+        return  painter<=m
+   if m>n:
+        return False
+    st = max(arr)
+    end = sum(arr)
+    ans = -1
+    while(st<=end):
+        mid =  st +(end-st)//2
+        if(isPossible(arr,n,m,mid)):
+            ans = mid
+            end = mid-1
+        else:
+            st  =mid +1
+    return ans
+print(painting([40,30,10,20],2))
