@@ -1,0 +1,26 @@
+def aggressiveCows(stalls, k):
+    n = len(stalls)
+    stalls.sort()
+    def isminimum(stalls,n,k,mindistance):
+        cows = 1
+        laststall = stalls[0]
+        for i in range(1,n):
+            if stalls[i]-laststall >= mindistance:
+                cows+=1
+                laststall = stalls[i]
+            if cows == k:
+                return True
+        return False
+    if k>n:
+        return False
+    st = 1
+    end = max(stalls)-min(stalls)
+    ans = -1
+    while (st<=end):
+        mid = st + (end-st)//2
+        if isminimum(stalls,n,k,mid):
+            ans = mid
+            st = mid+1
+        else:
+            end = mid-1
+    return ans
