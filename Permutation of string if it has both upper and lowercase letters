@@ -1,0 +1,36 @@
+#hmey bs ek seperate function bnana pdega hr char ko index me convert krne ke liye
+class Solution(object):
+
+    def checkInclusion(self, s1, s2):
+
+        if len(s1) > len(s2):
+            return False
+
+        count1 = [0] * 52
+        count2 = [0] * 52
+
+        def getIndex(ch):
+            if 'A' <= ch <= 'Z':
+                return ord(ch) - ord('A')
+            else:
+                return ord(ch) - ord('a') + 26
+
+        for i in range(len(s1)):
+            count1[getIndex(s1[i])] += 1
+            count2[getIndex(s2[i])] += 1
+
+        if count1 == count2:
+            return True
+
+        for i in range(len(s1), len(s2)):
+
+            # Add new character
+            count2[getIndex(s2[i])] += 1
+
+            # Remove old character
+            count2[getIndex(s2[i - len(s1)])] -= 1
+
+            if count1 == count2:
+                return True
+
+        return False
